@@ -1,0 +1,9 @@
+class homePage {
+     elements = {
+
+    };
+
+    openMainPage(){
+
+    };
+};

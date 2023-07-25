@@ -1,0 +1,9 @@
+class cartPage {
+    elements = {
+
+   };
+
+   openCartPage(){
+
+   };
+};

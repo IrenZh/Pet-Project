@@ -1,0 +1,9 @@
+class loginPage {
+    elements = {
+
+   };
+   
+   login(){
+
+   };
+};

@@ -21,9 +21,13 @@ describe('Search Test', () =>{
     it.only('Searching with full name of item clicking the search button Test', () =>{
         fullNameProduct.forEach(fullNameProduct => {
             homePage.verifySearchResultsInDropDown(fullNameProduct);
+            // eslint-disable-next-line cypress/no-unnecessary-waiting
+            cy.wait(2000);
             homePage.clickOnSerchButton();
-            searchPage.verifyVelueOfSearchInput(fullNameProduct);
-            searchPage.verifyVelueOfSearchTitle(fullNameProduct);
+            // eslint-disable-next-line cypress/no-unnecessary-waiting
+            cy.wait(2000);
+            searchPage.verifyValueOfSearchInput(fullNameProduct);
+            searchPage.verifyValueOfSearchTitle(fullNameProduct);
             searchPage.verifySearchResults(fullNameProduct);
         });
     });

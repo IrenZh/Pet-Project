@@ -12,19 +12,17 @@ class search {
         this.elements.getSearchButton().click();
     }
 
-    verifyVelueOfSearchInput(searchQuery){ 
+    verifyValueOfSearchInput(searchQuery){ 
         this.elements.getSearchInput().should('have.value', searchQuery);
     }
 
-    verifyVelueOfSearchTitle(searchQuery){ 
+    verifyValueOfSearchTitle(searchQuery){ 
         this.elements.getSearchTitle().should('have.text', 'Пошук - ' + searchQuery);
     }
 
     verifySearchResults(searchQuery){
         this.elements.getSearchResultTitle().each((result) => {          
-            cy.wrap(result).invoke('text').then((text) => {
-                expect(text).to.include(searchQuery);
-            });
+            expect(result.text().toLowerCase()).to.include(searchQuery); 
         });
     }
 }

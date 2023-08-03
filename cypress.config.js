@@ -1,14 +1,18 @@
 const { defineConfig } = require('cypress');
+const allureWriter = require('@shelex/cypress-allure-plugin/writer');
 
 module.exports = defineConfig({
     watchForFileChanges: false,
+    video: false,
+    env: {
+        allure: true,
+        allureResultsPath: 'allure-results',
+    },
     e2e: {
         baseUrl: 'https://la-torta.ua/ua/',
         setupNodeEvents(on, config) {
-        },
-        env: {
-        },
-        specPattern: 'cypress/e2e/*.js',
-        supportFile: 'cypress/support/commands.js',
+            allureWriter(on, config);
+            return config;
+        }
     },
 });

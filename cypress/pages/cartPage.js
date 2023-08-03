@@ -1,9 +1,9 @@
 class cartPage {
     elements = {
 
-   };
+    };
 
-   openCartPage(){
+    openCartPage(){
 
-   };
-};
+    }
+}

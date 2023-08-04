@@ -31,12 +31,14 @@ class home {
         this.elements.getSearchButton().click();
     }
 
+    clickEnterForSearching(){ 
+        this.elements.getSearchBar().type('{enter}');
+    }
+
     verifySearchResultsInDropDown(searchQuery){
         this.typeSearchQuery(searchQuery); 
-        this.elements.getSearchResulTitle().each((result) => {          
-            cy.wrap(result).invoke('text').then((text) => {
-                expect(text).to.include(searchQuery);
-            });
+        this.elements.getSearchResulTitle().each((result) => {      
+            expect(result.text().toLowerCase()).to.include(searchQuery);           
         });
     }
 }

@@ -1,5 +1,10 @@
 {
-    "fullNameProduct": [
-        "Рисовий папір круглий 22см, 10шт",
-        "Цукрове посипання Украса Сердечка мікс №7 (50гр)"]
+    "productName": [
+        "rainbow",
+        "sugarflair bubble-gum",
+        "ateco #119",
+        "happy",
+        "colour splash orange"      
+    ],
+    "productNameForPagination": "glt"
 }

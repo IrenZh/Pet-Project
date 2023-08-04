@@ -31,10 +31,14 @@ class home {
         this.elements.getSearchButton().click();
     }
 
+    clickEnterForSearching(){ 
+        this.elements.getSearchBar().type('{enter}');
+    }
+
     verifySearchResultsInDropDown(searchQuery){
         this.typeSearchQuery(searchQuery); 
         this.elements.getSearchResulTitle().each((result) => {      
-            expect(result.text()).to.include(searchQuery);           
+            expect(result.text().toLowerCase()).to.include(searchQuery);           
         });
     }
 }

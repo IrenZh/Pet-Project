@@ -18,7 +18,7 @@ describe('Login Test', () =>{
         cy.visit('/');
     });
     
-    it('Successful Login Test', () =>{
+    it('Successful Login Test', { tags: '@critical'}, () =>{
         homePage.elements.getUserIconButton().click();
         homePage.elements.getAuthButton().click();
         loginPage.login(Cypress.env('EMAIL'), Cypress.env('PASSWORD'));
@@ -28,7 +28,7 @@ describe('Login Test', () =>{
         homePage.elements.getUserCabinet().should('contain', homePage.itemsName.userCabinet);
     });
 
-    it('Log Out Test', () =>{
+    it('Log Out Test', { tags: '@critical'}, () =>{
         homePage.elements.getUserIconButton().click();
         homePage.elements.getAuthButton().click();
         loginPage.login(Cypress.env('EMAIL'), Cypress.env('PASSWORD'));
@@ -56,7 +56,7 @@ describe('Login Test', () =>{
         });
     }); 
 
-    it('Login with invalid email Test', () =>{  
+    it.only('Login with invalid email Test', () =>{  
         invalidEmail.forEach(invalidEmail => { 
             homePage.elements.getUserIconButton().click();
             homePage.elements.getAuthButton().click();

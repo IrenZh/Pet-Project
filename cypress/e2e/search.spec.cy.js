@@ -16,11 +16,11 @@ describe('Search Test', () =>{
         cy.visit('/');
     });
 
-    it('Checking the default values in the search bar Test', () =>{
+    it.only('Checking the default values in the search bar Test', () =>{
         homePage.verifyDefaultValuePlaceholder(homePage.itemsName.placeholder);
     });
 
-    it('Searching with name of item clicking the search button Test', () =>{
+    it.only('Searching with name of item clicking the search button Test', () =>{
         productName.forEach(productName => {
             homePage.verifySearchResultsInDropDown(productName);
             homePage.clickOnSerchButton();

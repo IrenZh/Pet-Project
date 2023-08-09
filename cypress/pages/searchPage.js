@@ -4,8 +4,11 @@ class search {
         getSearchTitle: () => cy.get('h1.SearchFilter-title'),
         getSearchButton: () => cy.get('#button-search'),
         getSearchResultTitle: () => cy.get('.ProductListItem-title'),
-        getPaginationSecondPage: () => cy.get('ul.pagination li:nth-child(2)')
-
+        getPaginationSecondPage: () => cy.get('ul.pagination li:nth-child(2)'),
+        getBuyButton: () => cy.get('.Button_primary'),
+        getSuccessMessage: () => cy.get('.Alert_success'),
+        getPriceOfItem: () => cy.get('.ProductListInfo-price:first'),
+        getProductItem: () => cy.get('.ProductListItem')
     };
 
     /**
@@ -93,6 +96,32 @@ class search {
 
     verifyMessage(){ 
         cy.contains('p', 'Немає товарів, які відповідають критеріям пошука.');
+    }
+
+    /**
+     * Get the price of a product by its name.
+     *
+     * @param {string} productName - The name of the product to search for.
+     * @returns The price of the matching product.
+     *
+     */
+
+    getPriceOfItemByName(productName){
+        return this.elements.getSearchResultTitle().contains(productName).closest('.ProductListItem')
+            .find('.ProductListInfo-price:first').invoke('text');
+    }
+
+    /**
+     * Clicks Buy of a product with the given name and verifies success message.
+     * @param {string} productName The name of the product to search for and click Buy.
+     */
+
+    clickBuyButtonOfProductByName(productName) {
+        this.elements.getSearchResultTitle().contains(productName).invoke('text').as('productTitle');
+        this.elements.getSearchResultTitle().contains(productName).closest('.ProductListItem').find('.Button_primary').click();
+        cy.get('@productTitle').then(productTitle => {
+            this.elements.getSuccessMessage().should('contain', `${productTitle} додано у кошик!`);
+        });
     }
 }
 

@@ -79,8 +79,8 @@ class home {
      * Verifies the default products value of the cart icon.
      */
 
-    verifyDefaultValueOfCartIcon(){ 
-        this.elements.getCartButton().should('have.text', '0');
+    verifyValueOfCartIcon(numberOfProducts){ 
+        this.elements.getCartButton().should('have.text', numberOfProducts);
     }
 
     /**

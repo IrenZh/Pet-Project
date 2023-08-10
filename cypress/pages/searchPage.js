@@ -112,13 +112,21 @@ class search {
     }
 
     /**
-     * Clicks Buy of a product with the given name and verifies success message.
-     * @param {string} productName The name of the product to search for and click Buy.
+     * Clicks Buy of a product with the given name.
+     * @param {} productName The name of the product to search for and click Buy.
      */
 
     clickBuyButtonOfProductByName(productName) {
-        this.elements.getSearchResultTitle().contains(productName).invoke('text').as('productTitle');
         this.elements.getSearchResultTitle().contains(productName).closest('.ProductListItem').find('.Button_primary').click();
+    }
+
+    /**
+     * Verifies success message with product name after click on Buy button.
+     * @param {*} productName The name of the product to click Buy
+     */
+
+    verifySuccessMessage(productName){
+        this.elements.getSearchResultTitle().contains(productName).invoke('text').as('productTitle');
         cy.get('@productTitle').then(productTitle => {
             this.elements.getSuccessMessage().should('contain', `${productTitle} додано у кошик!`);
         });

@@ -42,6 +42,7 @@ describe('Cart Tests', () =>{
         homePage.typeSearchQuery(productNameForCart[0]);
         homePage.clickOnSerchButton();
         searchPage.clickBuyButtonOfProductByName(productNameForCart[0]);
+        searchPage.verifySuccessMessage(productNameForCart[0]);
         homePage.verifyValueOfCartIcon(1);
         homePage.clickCartButton();
         cartPage.verifyTitleOfProductOnCart(productNameForCart[0]);
@@ -69,6 +70,7 @@ describe('Cart Tests', () =>{
         homePage.typeSearchQuery(productNameForCart[2]);
         homePage.clickOnSerchButton();
         searchPage.clickBuyButtonOfProductByName(productNameForCart[2]);
+        searchPage.verifySuccessMessage(productNameForCart[2]);
         homePage.clickCartButton();
         cartPage.elements.getIncreaseButton().click().click();
         cartPage.verifyQuantityOfProducts(3);

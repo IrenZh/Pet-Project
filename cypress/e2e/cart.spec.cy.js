@@ -74,13 +74,9 @@ describe('Cart Tests', () =>{
         homePage.clickCartButton();
         cartPage.elements.getIncreaseButton().click().click();
         cartPage.verifyQuantityOfProducts(3);
-        homePage.clickCartButton();
-        homePage.clickCartButton();
         cartPage.compareProductPriceWithPriceOnCart(productNameForCart[2]);
         cartPage.elements.getDecreaseButton().click();
         cartPage.verifyQuantityOfProducts(2);
-        homePage.clickCartButton();
-        homePage.clickCartButton();
         cartPage.compareProductPriceWithPriceOnCart(productNameForCart[2]);
     });
 
@@ -108,8 +104,6 @@ describe('Cart Tests', () =>{
         cartPage.verifyTitleOfProductOnCart(productNameForCart[4]);
         cartPage.verifyQuantityOfProducts(1);
         cartPage.setValueToQuantityInput(5);
-        homePage.clickCartButton();
-        homePage.clickCartButton();
         cartPage.verifyQuantityOfProducts(5);
         cartPage.compareProductPriceWithPriceOnCart(productNameForCart[4]);
     });
@@ -123,8 +117,6 @@ describe('Cart Tests', () =>{
         searchPage.clickBuyButtonOfProductByName(productNameForCart[5]);
         homePage.clickCartButton();
         cartPage.clickDeleteButton();
-        homePage.clickCartButton();
-        homePage.clickCartButton();
         cartPage.verifyDefaultMessageForCart(cartPage.items.defaultMessageCart);
     });
 

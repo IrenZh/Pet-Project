@@ -78,11 +78,7 @@ class cart {
     compareProductPriceWithPriceOnCart(productName) {
         this.getQuantityOfProducts().then(quantity => {
             this.getPriceOnCart(productName, quantity).then(expectedProductPrice => {
-                this.elements.getProductPrice().invoke('text').then(cartPrice => {
-                    let cartPriceNumeric = parseFloat(cartPrice);
-                    let expectedPriceNumber = parseFloat(expectedProductPrice);
-                    expect(expectedPriceNumber).to.equal(cartPriceNumeric);
-                });
+                this.elements.getProductPrice().should('include.text', expectedProductPrice);
             });
         });
     }

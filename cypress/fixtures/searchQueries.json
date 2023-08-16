@@ -6,5 +6,14 @@
         "happy",
         "colour splash orange"      
     ],
-    "productNameForPagination": "glt"
+    "productNameForPagination": "glt",
+    "productNameForCart": [
+        "Rainbow Jewel Powder Blue",
+        "Rainbow Stardust Grape",
+        "Rainbow Stardust Lime",
+        "Eclat Light Violet",
+        "Chefmaster Liqua-Gel X-Mas Red",
+        "Chefmaster Liqua-Gel Sienna (Flashtone)",
+        "Easy Print Lesepidado"
+    ]
 }

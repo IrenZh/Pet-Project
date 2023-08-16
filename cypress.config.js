@@ -7,6 +7,8 @@ module.exports = defineConfig({
     env: {
         allure: true,
         allureResultsPath: 'allure-results',
+        grepFilterSpecs: true,
+        grepOmitFiltered: true,
     },
     e2e: {
         baseUrl: 'https://la-torta.ua/ua/',

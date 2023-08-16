@@ -13,14 +13,19 @@ describe('Search Test', () =>{
     });
 
     beforeEach(() => {
+        cy.allure().suite('Search Tests');
         cy.visit('/');
     });
 
-    it('Checking the default values in the search bar Test', () =>{
+    it('Checking the default values in the search bar Test', { tags: ['@low', '@search']}, () =>{    
+        cy.allure().severity('minor');
         homePage.verifyDefaultValuePlaceholder(homePage.itemsName.placeholder);
     });
 
-    it('Searching with name of item clicking the search button Test', () =>{
+    it('Searching with name of item clicking the search button Test', { tags: ['@high', '@search']}, () =>{
+        cy.allure()
+            .severity('normal')
+            .tag('search');
         productName.forEach(productName => {
             homePage.verifySearchResultsInDropDown(productName);
             homePage.clickOnSerchButton();
@@ -30,7 +35,10 @@ describe('Search Test', () =>{
         });
     });
 
-    it('Searching with name of item clicking "Enter" Test', () =>{
+    it('Searching with name of item clicking "Enter" Test', { tags: ['@high', '@search']}, () =>{
+        cy.allure()
+            .severity('normal')
+            .tag('search');
         homePage.verifySearchResultsInDropDown(productName[0]);
         homePage.clickEnterForSearching();
         searchPage.verifyValueOfSearchInput(productName[0]);
@@ -38,7 +46,10 @@ describe('Search Test', () =>{
         searchPage.verifySearchResults(productName[0]);
     });
 
-    it('Verify pagination Test', () =>{
+    it('Verify pagination Test', { tags: ['@high', '@search']}, () =>{
+        cy.allure()
+            .severity('normal')
+            .tag('search');
         homePage.verifySearchResultsInDropDown(productNameForPagination);
         homePage.clickEnterForSearching();
         searchPage.verifyValueOfSearchInput(productNameForPagination);
@@ -48,7 +59,10 @@ describe('Search Test', () =>{
         searchPage.verifySearchResults(productNameForPagination);
     });
 
-    it('Searching for an item, then changing the search word Test', () =>{
+    it('Searching for an item, then changing the search word Test', { tags: ['@medium', '@search']}, () =>{
+        cy.allure()
+            .severity('normal')
+            .tag('search');
         homePage.verifySearchResultsInDropDown(productName[3]);
         homePage.clickEnterForSearching();
         searchPage.verifyValueOfSearchInput(productName[3]);
@@ -60,7 +74,10 @@ describe('Search Test', () =>{
         searchPage.verifySearchResults(productName[4]);
     });
 
-    it('Searching with empty field Test', () =>{
+    it('Searching with empty field Test', { tags: ['@medium', '@search']}, () =>{
+        cy.allure()
+            .severity('normal')
+            .tag('search');
         homePage.verifySearchResultsInDropDown(productName[1]);
         homePage.clickEnterForSearching();
         searchPage.verifyValueOfSearchInput(productName[1]);

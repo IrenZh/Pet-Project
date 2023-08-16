@@ -15,10 +15,14 @@ describe('Login Test', () =>{
     });
 
     beforeEach(() => {
+        cy.allure().suite('Login Tests');
         cy.visit('/');
     });
     
-    it('Successful Login Test', () =>{
+    it('Successful Login Test', { tags: ['@critical', '@login']}, () =>{
+        cy.allure()
+            .severity('critical')
+            .tag('login');
         homePage.elements.getUserIconButton().click();
         homePage.elements.getAuthButton().click();
         loginPage.login(Cypress.env('EMAIL'), Cypress.env('PASSWORD'));
@@ -28,7 +32,10 @@ describe('Login Test', () =>{
         homePage.elements.getUserCabinet().should('contain', homePage.itemsName.userCabinet);
     });
 
-    it('Log Out Test', () =>{
+    it('Log Out Test', { tags: ['@critical', '@login']}, () =>{
+        cy.allure()
+            .severity('critical')
+            .tag('login');
         homePage.elements.getUserIconButton().click();
         homePage.elements.getAuthButton().click();
         loginPage.login(Cypress.env('EMAIL'), Cypress.env('PASSWORD'));
@@ -43,7 +50,10 @@ describe('Login Test', () =>{
         homePage.elements.getAuthButton().should('contain', homePage.itemsName.authorization);
     });
 
-    it('Login with not registered email Test', () =>{  
+    it('Login with not registered email Test', { tags: ['@high', '@login']}, () =>{  
+        cy.allure()
+            .severity('normal')
+            .tag('login');
         notRegisteredEmail.forEach(notRegisteredEmail => {
             homePage.elements.getUserIconButton().click();
             homePage.elements.getAuthButton().click();
@@ -56,7 +66,10 @@ describe('Login Test', () =>{
         });
     }); 
 
-    it('Login with invalid email Test', () =>{  
+    it('Login with invalid email Test', { tags: ['@high', '@login']}, () =>{  
+        cy.allure()
+            .severity('normal')
+            .tag('login');
         invalidEmail.forEach(invalidEmail => { 
             homePage.elements.getUserIconButton().click();
             homePage.elements.getAuthButton().click();
@@ -70,7 +83,10 @@ describe('Login Test', () =>{
         });
     });
     
-    it('Login with invalid password', () =>{
+    it('Login with invalid password', { tags: ['@high', '@login']}, () =>{
+        cy.allure()
+            .severity('normal')
+            .tag('login');
         invalidPassword.forEach(invalidPassword => { 
             homePage.elements.getUserIconButton().click();
             homePage.elements.getAuthButton().click();
@@ -82,7 +98,10 @@ describe('Login Test', () =>{
         });
     });
 
-    it('Successful apiLogin Test', () =>{
+    it('Successful apiLogin Test', { tags: ['@critical', '@login']}, () =>{
+        cy.allure()
+            .severity('critical')
+            .tag('login');
         cy.loginViaApi(Cypress.env('EMAIL'), Cypress.env('PASSWORD'));
         
         homePage.elements.getUserIconButton().click();

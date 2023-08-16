@@ -108,7 +108,7 @@ describe('Cart Tests', () =>{
         cartPage.compareProductPriceWithPriceOnCart(productNameForCart[4]);
     });
 
-    it('Removing items from the cart Test', { tags: ['@medium', '@cart']}, () =>{
+    it.only('Removing items from the cart Test', { tags: ['@medium', '@cart']}, () =>{
         cy.allure()
             .severity('normal')
             .tag('cart');
@@ -117,6 +117,8 @@ describe('Cart Tests', () =>{
         searchPage.clickBuyButtonOfProductByName(productNameForCart[5]);
         homePage.clickCartButton();
         cartPage.clickDeleteButton();
+        cartPage.closeCart();
+        homePage.clickCartButton();
         cartPage.verifyDefaultMessageForCart(cartPage.items.defaultMessageCart);
     });
 

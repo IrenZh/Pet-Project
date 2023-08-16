@@ -3,7 +3,7 @@ import { searchPage } from './searchPage';
 class cart {
     elements = {
         getCart: () => cy.get('#dropdown-cart'),
-        getMessageOfCart: () => cy.get('#header-cart-content'),
+        getMessageOfCart: () => cy.get('.HeaderCart-content_empty'),
         getCloseButton: () => cy.get('.fa-close'),
         getProductTitle: () => cy.get('.ProductTable-productTitle'),
         getProductPrice: () => cy.get('.ProductTable-price'),
@@ -23,11 +23,10 @@ class cart {
      * Verifies if the default message in the dropdown cart matches the provided default message.
      * @param {string} defaultMessageCart - 'Ваш кошик порожній!'.
      */
-
-    verifyDefaultMessageForCart(defaultMessageCart){
+    verifyDefaultMessageForCart(defaultMessageCart) {
         this.elements.getCart().should('be.visible');
-        this.elements.getMessageOfCart().then((result) => {
-            expect(result.text().trim().toLowerCase()).to.contain(defaultMessageCart);
+        this.elements.getMessageOfCart().invoke('text').then((messageText) => {
+            cy.wrap(messageText.trim().toLowerCase()).should('contain', defaultMessageCart);
         });
     }
 
@@ -107,7 +106,7 @@ class cart {
      */
 
     setValueToQuantityInput(number){ 
-        this.elements.getInputOfQuantity().type(number, '{enter}');
+        this.elements.getInputOfQuantity().type(number).type('{enter}');
     }
 
     /**

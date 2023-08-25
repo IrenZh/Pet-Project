@@ -1,16 +1,22 @@
+import ButtonElement from '../elements/buttonElement';
+
 class home {
+    constructor() {
+        this.getCartButton = new ButtonElement('#header-cart-open-count');
+        this.getAuthButton = new ButtonElement('div.SignForm-content>span[data-dropdown=\'header-login-form\']');
+        this.getUserIconButton = new ButtonElement('div.SignForm');
+        this.getLogOut = new ButtonElement('a.HeaderTop-link.HeaderTop-link_withSeparator.SignForm-link');
+        this.getSearchButton = new ButtonElement('.fa-search');
+        this.getCartButton = new ButtonElement('#header-cart-open-count');
+
+    }
     elements = {
-        getAuthButton: () => cy.get('div.SignForm-content>span[data-dropdown=\'header-login-form\']'),
-        getUserIconButton: () => cy.get('div.SignForm'),
         getUserCabinet: () => cy.get('a.HeaderTop-link.SignForm-link:nth-child(1)'),
-        getLogOut: () => cy.get('a.HeaderTop-link.HeaderTop-link_withSeparator.SignForm-link'),
         getMainLogo: () => cy.get('.HeaderMain-logo'),
         getAlertLogIn: () => cy.get('.Alert'),
         getSearchBar: () => cy.get('input.HeaderMain-searchForm'),
-        getSearchButton: () => cy.get('.fa-search'),
         getSearchResultsDropDown: () => cy.get('.HeaderSearchResult'),
         getSearchResulTitle: () => cy.get('.SearchResultProduct-name'),
-        getCartButton: () => cy.get('#header-cart-open-count'),
         getCartTotal: () => cy.get('.HeaderCartLink-price')
     };
 
@@ -40,14 +46,6 @@ class home {
     }
 
     /**
-     * Clicks on the search button.
-     */
-
-    clickOnSerchButton(){ 
-        this.elements.getSearchButton().click();
-    }
-
-    /**
      * Simulates pressing the 'Enter' key for searching in the search bar.
      */
 
@@ -65,22 +63,6 @@ class home {
         this.elements.getSearchResulTitle().each((result) => {      
             expect(result.text().toLowerCase()).to.include(searchQuery);           
         });
-    }
-
-    /**
-     * Clicks on the cart button.
-     */
-
-    clickCartButton(){ 
-        this.elements.getCartButton().click();
-    }
-
-    /**
-     * Verifies the default products value of the cart icon.
-     */
-
-    verifyValueOfCartIcon(numberOfProducts){ 
-        this.elements.getCartButton().should('have.text', numberOfProducts);
     }
 
     /**

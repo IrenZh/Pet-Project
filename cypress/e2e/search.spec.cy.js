@@ -28,7 +28,7 @@ describe('Search Test', () =>{
             .tag('search');
         productName.forEach(productName => {
             homePage.verifySearchResultsInDropDown(productName);
-            homePage.clickOnSerchButton();
+            homePage.getSearchButton.clickButton();
             searchPage.verifyValueOfSearchInput(productName);
             searchPage.verifyValueOfSearchTitle(productName);
             searchPage.verifySearchResults(productName);
@@ -55,7 +55,7 @@ describe('Search Test', () =>{
         searchPage.verifyValueOfSearchInput(productNameForPagination);
         searchPage.verifyValueOfSearchTitle(productNameForPagination);
         searchPage.verifySearchResults(productNameForPagination);
-        searchPage.clickToSecondPage();
+        searchPage.getPaginationSecondPage.clickButton();
         searchPage.verifySearchResults(productNameForPagination);
     });
 
@@ -69,6 +69,7 @@ describe('Search Test', () =>{
         searchPage.verifyValueOfSearchTitle(productName[3]);
         searchPage.verifySearchResults(productName[3]);
         searchPage.searchItem(productName[4]);
+        searchPage.getSearchButton.clickButton();
         searchPage.verifyValueOfSearchInput(productName[4]);
         searchPage.verifyValueOfSearchTitle(productName[4]);
         searchPage.verifySearchResults(productName[4]);

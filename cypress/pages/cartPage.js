@@ -1,18 +1,22 @@
+import ButtonElement from '../elements/buttonElement';
 import { searchPage } from './searchPage';
 
 class cart {
+    constructor() {
+        this.getCloseButton = new ButtonElement('.fa-close');
+        this.getDecreaseButton = new ButtonElement('.ProductTable-quantity .product-counter__btn--decrease');
+        this.getIncreaseButton = new ButtonElement('.ProductTable-quantity .product-counter__btn--increase');
+        this.getDeleteButton = new ButtonElement('.fa-remove');
+        this.getOrderButton = new ButtonElement('.HeaderCart-btn');
+    }
+    
     elements = {
         getCart: () => cy.get('#dropdown-cart'),
         getMessageOfCart: () => cy.get('.HeaderCart-content_empty'),
-        getCloseButton: () => cy.get('.fa-close'),
         getProductTitle: () => cy.get('.ProductTable-productTitle'),
         getProductPrice: () => cy.get('.ProductTable-price'),
         getQuantityOfItems: () => cy.get('.ProductTable-quantity').find('[data-value]'),
-        getDecreaseButton: () => cy.get('.ProductTable-quantity .product-counter__btn--decrease'),
-        getIncreaseButton: () => cy.get('.ProductTable-quantity .product-counter__btn--increase'),
         getInputOfQuantity: () => cy.get('.ProductTable-quantity .product-counter__val'),
-        getDeleteButton: () => cy.get('.fa-remove'),
-        getOrderButton: () => cy.get('.HeaderCart-btn'),
     };
 
     items = {
@@ -28,14 +32,6 @@ class cart {
         this.elements.getMessageOfCart().invoke('text').then((messageText) => {
             cy.wrap(messageText.trim().toLowerCase()).should('contain', defaultMessageCart);
         });
-    }
-
-    /**
-     *  Closes the cart by clicking the close button.
-     */
-
-    closeCart(){
-        this.elements.getCloseButton().click();
     }
 
     /**
@@ -107,22 +103,6 @@ class cart {
 
     setValueToQuantityInput(number){ 
         this.elements.getInputOfQuantity().type(number).type('{enter}');
-    }
-
-    /**
-     * Clicks the delete button for a product from the cart
-     */
-
-    clickDeleteButton(){ 
-        this.elements.getDeleteButton().click();
-    }
-
-    /**
-     * Clicks the order button to initiate the order process.
-     */
-
-    clickOrderButton(){ 
-        this.elements.getOrderButton().click();
     }
 
 }

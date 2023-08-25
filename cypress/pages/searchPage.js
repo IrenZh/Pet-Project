@@ -1,11 +1,15 @@
+import ButtonElement from '../elements/buttonElement';
+
 class search {
+    constructor() {
+        this.getSearchButton = new ButtonElement('#button-search');
+        this.getBuyButton = new ButtonElement('.Button_primary');
+        this.getPaginationSecondPage = new ButtonElement('ul.pagination li:nth-child(2)');
+    }
     elements = {
         getSearchInput: () => cy.get('input[name="search"]'),
         getSearchTitle: () => cy.get('h1.SearchFilter-title'),
-        getSearchButton: () => cy.get('#button-search'),
         getSearchResultTitle: () => cy.get('.ProductListItem-title'),
-        getPaginationSecondPage: () => cy.get('ul.pagination li:nth-child(2)'),
-        getBuyButton: () => cy.get('.Button_primary'),
         getSuccessMessage: () => cy.get('.Alert_success'),
         getPriceOfItem: () => cy.get('.ProductListInfo-price:first'),
         getProductItem: () => cy.get('.ProductListItem')
@@ -18,7 +22,6 @@ class search {
 
     searchItem(searchQuery){ 
         this.elements.getSearchInput().click().clear().type(searchQuery);
-        this.elements.getSearchButton().click();
     }
 
     /**
@@ -80,14 +83,6 @@ class search {
         this.elements.getSearchResultTitle().each((result) => {          
             expect(result.text().toLowerCase()).to.include(searchQuery); 
         });
-    }
-
-    /**
-     * Simulates clicking on the button to navigate to the second page of search results.
-     */
-
-    clickToSecondPage(){ 
-        this.elements.getPaginationSecondPage().click();
     }
 
     /**

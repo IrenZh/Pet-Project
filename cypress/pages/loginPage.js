@@ -1,6 +1,10 @@
 import { links } from '../e2e/static';
+import ButtonElement from '../elements/buttonElement';
 
 class login {
+    constructor() {
+        this.getLoginButton = new ButtonElement('button#header-login-form-btn');
+    }
     elements = {
         getLoginInput: () => cy.get('input#login-form-email'),
         getPasswordInput: () => cy.get('input#login-form-password'),

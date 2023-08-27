@@ -1,4 +1,8 @@
+import AlertElement from '../elements/alertElement';
 import ButtonElement from '../elements/buttonElement';
+import dropDownElement from '../elements/dropDownElement';
+import InputElement from '../elements/inputElement';
+import TitleElement from '../elements/titleElement';
 
 class home {
     constructor() {
@@ -8,71 +12,26 @@ class home {
         this.getLogOut = new ButtonElement('a.HeaderTop-link.HeaderTop-link_withSeparator.SignForm-link');
         this.getSearchButton = new ButtonElement('.fa-search');
         this.getCartButton = new ButtonElement('#header-cart-open-count');
+        this.getUserCabinet = new ButtonElement('a.HeaderTop-link.SignForm-link:nth-child(1)');
+
+        this.getSearchBar = new InputElement('input.HeaderMain-searchForm');
+
+        this.getSearchDropDown = new dropDownElement('.HeaderSearchResult');
+        
+        this.getAlertLogIn = new AlertElement('.Alert');
+
+        this.getSearchResulTitleOnDropDown = new TitleElement('.SearchResultProduct-name');    
+        this.getCartTotal = new TitleElement('.HeaderCartLink-price');
+        this.getMainLogo = new TitleElement('.HeaderMain-logo');
 
     }
-    elements = {
-        getUserCabinet: () => cy.get('a.HeaderTop-link.SignForm-link:nth-child(1)'),
-        getMainLogo: () => cy.get('.HeaderMain-logo'),
-        getAlertLogIn: () => cy.get('.Alert'),
-        getSearchBar: () => cy.get('input.HeaderMain-searchForm'),
-        getSearchResultsDropDown: () => cy.get('.HeaderSearchResult'),
-        getSearchResulTitle: () => cy.get('.SearchResultProduct-name'),
-        getCartTotal: () => cy.get('.HeaderCartLink-price')
-    };
 
     itemsName = {
         userCabinet: 'Особистий кабінет',
         authorization: 'Авторизація',
-        placeholder: 'Найти..'
+        placeholder: 'Найти..',
+        defaultValueOfCartTotal: '0 грн.'
     };
-
-    /**
-     * Verifies the default value of the placeholder in the search bar
-     * @param {*} placeholder - The expected placeholder value for the search bar('Найти..').
-     */
-
-    verifyDefaultValuePlaceholder(placeholder){ 
-        this.elements.getSearchBar().click().should('have.attr', 'placeholder', placeholder);
-    }
-
-    /**
-     * Types a search query in the search bar and verifies the visibility of search results dropdown.
-     * @param {*} searchQuery - The search query to be typed.
-     */
-
-    typeSearchQuery(searchQuery){ 
-        this.elements.getSearchBar().click().clear().type(searchQuery);
-        this.elements.getSearchResultsDropDown().should('be.visible');
-    }
-
-    /**
-     * Simulates pressing the 'Enter' key for searching in the search bar.
-     */
-
-    clickEnterForSearching(){ 
-        this.elements.getSearchBar().type('{enter}');
-    }
-
-    /**
-     * Verifies search results in the dropdown contain the provided search query.
-     * @param {*} searchQuery - The search query to be included in the search results.
-     */
-
-    verifySearchResultsInDropDown(searchQuery){
-        this.typeSearchQuery(searchQuery); 
-        this.elements.getSearchResulTitle().each((result) => {      
-            expect(result.text().toLowerCase()).to.include(searchQuery);           
-        });
-    }
-
-    /**
-     * Verifies the default value of the cart total.
-     */
-
-    verifyDefaultValueOfCartTotal(){ 
-        this.elements.getCartTotal().should('have.text', '0 грн.');
-    }
-
 }
 
 export const homePage = new home();

@@ -1,4 +1,7 @@
 import ButtonElement from '../elements/buttonElement';
+import dropDownElement from '../elements/dropDownElement';
+import InputElement from '../elements/inputElement';
+import TitleElement from '../elements/titleElement';
 import { searchPage } from './searchPage';
 
 class cart {
@@ -8,48 +11,23 @@ class cart {
         this.getIncreaseButton = new ButtonElement('.ProductTable-quantity .product-counter__btn--increase');
         this.getDeleteButton = new ButtonElement('.fa-remove');
         this.getOrderButton = new ButtonElement('.HeaderCart-btn');
-    }
-    
-    elements = {
-        getCart: () => cy.get('#dropdown-cart'),
-        getMessageOfCart: () => cy.get('.HeaderCart-content_empty'),
-        getProductTitle: () => cy.get('.ProductTable-productTitle'),
-        getProductPrice: () => cy.get('.ProductTable-price'),
-        getQuantityOfItems: () => cy.get('.ProductTable-quantity').find('[data-value]'),
-        getInputOfQuantity: () => cy.get('.ProductTable-quantity .product-counter__val'),
-    };
 
+        this.getCart = new dropDownElement('#dropdown-cart');
+
+        this.getMessageOfCart = new TitleElement('.HeaderCart-content_empty');
+        this.getProductTitle = new TitleElement('.ProductTable-productTitle');
+        this.getProductPrice = new TitleElement('.ProductTable-price');
+
+        this.getQuantityOfItems = new InputElement('.ProductTable-quantity div[data-value]');       
+    }
+    elements = {
+        getQuantityOfItems: () => cy.get('.ProductTable-quantity div[data-value]'),
+        
+    };
+    
     items = {
         defaultMessageCart: 'кошик порожній!'
     };
-
-    /**
-     * Verifies if the default message in the dropdown cart matches the provided default message.
-     * @param {string} defaultMessageCart - 'Ваш кошик порожній!'.
-     */
-    verifyDefaultMessageForCart(defaultMessageCart) {
-        this.elements.getCart().should('be.visible');
-        this.elements.getMessageOfCart().invoke('text').then((messageText) => {
-            cy.wrap(messageText.trim().toLowerCase()).should('contain', defaultMessageCart);
-        });
-    }
-
-    /**
-     * Verifies that the cart dropdown is not visible.
-     */
-
-    verifyCartIsNotVisible(){
-        this.elements.getCart().should('not.be.visible');
-    }
-
-    /**
-     * Verifies that the title of the product in the cart matches the expected product name.
-     * @param {*} productName 
-     */
-
-    verifyTitleOfProductOnCart(productName) {
-        this.elements.getProductTitle().should('contain', productName);
-    }
 
     /**
      * Calculates the total price of a product in the cart based on its price and quantity.
@@ -73,7 +51,7 @@ class cart {
     compareProductPriceWithPriceOnCart(productName) {
         this.getQuantityOfProducts().then(quantity => {
             this.getPriceOnCart(productName, quantity).then(expectedProductPrice => {
-                this.elements.getProductPrice().should('include.text', expectedProductPrice);
+                this.getProductPrice.verifyValueOfTitle(expectedProductPrice);
             });
         });
     }
@@ -85,24 +63,6 @@ class cart {
 
     getQuantityOfProducts() {
         return this.elements.getQuantityOfItems().invoke('attr', 'data-value');
-    }
-
-    /**
-     * Verifies if the quantity of products matches the expected number.
-     * @param {number} numberOfProducts The expected number of products.
-     */
-
-    verifyQuantityOfProducts(numberOfProducts){ 
-        this.elements.getQuantityOfItems().should('have.attr', 'data-value', numberOfProducts);
-    }
-
-    /**
-     * Sets a specific quantity value in the quantity input field.
-     * @param {number} number The quantity value to set.
-     */
-
-    setValueToQuantityInput(number){ 
-        this.elements.getInputOfQuantity().type(number).type('{enter}');
     }
 
 }

@@ -30,12 +30,12 @@ describe('Search Test', () =>{
         productName.forEach(productName => {
             homePage.getSearchBar.typeText(productName);
             homePage.getSearchDropDown.verifyDropDownIsVisible();
-            homePage.getSearchResulTitleOnDropDown.verifyTitlesOfSearchResults(productName);
+            homePage.verifySearchResultsInDropDown(productName);
             homePage.getSearchButton.clickButton();
 
             searchPage.getSearchInput.verifyValueOfField(productName);
-            searchPage.getSearchTitle.verifyValueOfTitle(productName);
-            searchPage.getSearchResultTitle.verifyTitlesOfSearchResults(productName);
+            searchPage.getSearchTitle.verifyValueOfText(productName);
+            searchPage.verifyTitlesOfSearchResults(productName);
         });
     });
 
@@ -45,12 +45,12 @@ describe('Search Test', () =>{
             .tag('search');
         homePage.getSearchBar.typeText(productName[0]);
         homePage.getSearchDropDown.verifyDropDownIsVisible();
-        homePage.getSearchResulTitleOnDropDown.verifyTitlesOfSearchResults(productName[0]);           
+        homePage.verifySearchResultsInDropDown(productName[0]);           
         homePage.getSearchBar.clickEnter();
 
         searchPage.getSearchInput.verifyValueOfField(productName[0]);
-        searchPage.getSearchTitle.verifyValueOfTitle(productName[0]);
-        searchPage.getSearchResultTitle.verifyTitlesOfSearchResults(productName[0]);
+        searchPage.getSearchTitle.verifyValueOfText(productName[0]);
+        searchPage.verifyTitlesOfSearchResults(productName[0]);
     });
 
     it('Verify pagination Test', { tags: ['@high', '@search']}, () =>{
@@ -59,15 +59,15 @@ describe('Search Test', () =>{
             .tag('search');
         homePage.getSearchBar.typeText(productNameForPagination);
         homePage.getSearchDropDown.verifyDropDownIsVisible();
-        homePage.getSearchResulTitleOnDropDown.verifyTitlesOfSearchResults(productNameForPagination);   
+        homePage.verifySearchResultsInDropDown(productNameForPagination);   
         homePage.getSearchBar.clickEnter();
 
         searchPage.getSearchInput.verifyValueOfField(productNameForPagination);
-        searchPage.getSearchTitle.verifyValueOfTitle(productNameForPagination);
-        searchPage.getSearchResultTitle.verifyTitlesOfSearchResults(productNameForPagination);
+        searchPage.getSearchTitle.verifyValueOfText(productNameForPagination);
+        searchPage.verifyTitlesOfSearchResults(productNameForPagination);
 
         searchPage.getPaginationSecondPage.clickButton();
-        searchPage.getSearchResultTitle.verifyTitlesOfSearchResults(productNameForPagination);
+        searchPage.verifyTitlesOfSearchResults(productNameForPagination);
     });
 
     it('Searching for an item, then changing the search word Test', { tags: ['@medium', '@search']}, () =>{
@@ -76,18 +76,18 @@ describe('Search Test', () =>{
             .tag('search');
         homePage.getSearchBar.typeText(productName[3]);
         homePage.getSearchDropDown.verifyDropDownIsVisible();
-        homePage.getSearchResulTitleOnDropDown.verifyTitlesOfSearchResults(productName[3]);
+        homePage.verifySearchResultsInDropDown(productName[3]);
         homePage.getSearchBar.clickEnter();
 
         searchPage.getSearchInput.verifyValueOfField(productName[3]);
-        searchPage.getSearchTitle.verifyValueOfTitle(productName[3]);
-        searchPage.getSearchResultTitle.verifyTitlesOfSearchResults(productName[3]);
+        searchPage.getSearchTitle.verifyValueOfText(productName[3]);
+        searchPage.verifyTitlesOfSearchResults(productName[3]);
 
         searchPage.getSearchInput.typeText(productName[4]);
         searchPage.getSearchButton.clickButton();
         searchPage.getSearchInput.verifyValueOfField(productName[4]);
-        searchPage.getSearchTitle.verifyValueOfTitle(productName[4]);
-        searchPage.getSearchResultTitle.verifyTitlesOfSearchResults(productName[4]);
+        searchPage.getSearchTitle.verifyValueOfText(productName[4]);
+        searchPage.verifyTitlesOfSearchResults(productName[4]);
     });
 
     it('Searching with empty field Test', { tags: ['@medium', '@search']}, () =>{
@@ -96,17 +96,17 @@ describe('Search Test', () =>{
             .tag('search');
         homePage.getSearchBar.typeText(productName[1]);
         homePage.getSearchDropDown.verifyDropDownIsVisible();
-        homePage.getSearchResulTitleOnDropDown.verifyTitlesOfSearchResults(productName[1]);
+        homePage.verifySearchResultsInDropDown(productName[1]);
         homePage.getSearchBar.clickEnter();
 
         searchPage.getSearchInput.verifyValueOfField(productName[1]);
-        searchPage.getSearchTitle.verifyValueOfTitle('Пошук - ' + productName[1]);
-        searchPage.getSearchTitle.verifyTitlesOfSearchResults(productName[1]);
+        searchPage.getSearchTitle.verifyValueOfText('Пошук - ' + productName[1]);
+        searchPage.verifyTitlesOfSearchResults(productName[1]);
 
         searchPage.getSearchInput.clearInputField();
         searchPage.getSearchInput.verifyValueOfField(searchPage.itemsName.placeholder);
         searchPage.getSearchInput.clickEnter();
-        searchPage.getSearchResultTitle.verifyTitleIsNotExist();
+        searchPage.getSearchResultTitle.verifyTextIsNotExist();
         searchPage.verifyMessage();
     });
 });

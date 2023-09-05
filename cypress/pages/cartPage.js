@@ -1,7 +1,7 @@
 import ButtonElement from '../elements/buttonElement';
 import dropDownElement from '../elements/dropDownElement';
 import InputElement from '../elements/inputElement';
-import TitleElement from '../elements/titleElement';
+import TextElement from '../elements/textElement';
 import { searchPage } from './searchPage';
 
 class cart {
@@ -14,15 +14,15 @@ class cart {
 
         this.getCart = new dropDownElement('#dropdown-cart');
 
-        this.getMessageOfCart = new TitleElement('.HeaderCart-content_empty');
-        this.getProductTitle = new TitleElement('.ProductTable-productTitle');
-        this.getProductPrice = new TitleElement('.ProductTable-price');
+        this.getProductTitle = new TextElement('.ProductTable-productTitle');
+        this.getProductPrice = new TextElement('.ProductTable-price');
 
         this.getQuantityOfItems = new InputElement('.ProductTable-quantity div[data-value]');       
     }
     elements = {
         getQuantityOfItems: () => cy.get('.ProductTable-quantity div[data-value]'),
-        
+        getCart: () => cy.get('#dropdown-cart'),
+        getMessageOfCart: () => cy.get('.HeaderCart-content_empty'),
     };
     
     items = {
@@ -51,7 +51,7 @@ class cart {
     compareProductPriceWithPriceOnCart(productName) {
         this.getQuantityOfProducts().then(quantity => {
             this.getPriceOnCart(productName, quantity).then(expectedProductPrice => {
-                this.getProductPrice.verifyValueOfTitle(expectedProductPrice);
+                this.getProductPrice.verifyValueOfText(expectedProductPrice);
             });
         });
     }
@@ -63,6 +63,17 @@ class cart {
 
     getQuantityOfProducts() {
         return this.elements.getQuantityOfItems().invoke('attr', 'data-value');
+    }
+
+    /**
+     * Verifies if the default message in the dropdown cart matches the provided default message.
+     * @param {string} defaultMessageCart - 'Ваш кошик порожній!'.
+     */
+    verifyDefaultMessageForCart(defaultMessageCart) {
+        this.elements.getCart().should('be.visible');
+        this.elements.getMessageOfCart().invoke('text').then((messageText) => {
+            cy.wrap(messageText.trim().toLowerCase()).should('contain', defaultMessageCart);
+        });
     }
 
 }

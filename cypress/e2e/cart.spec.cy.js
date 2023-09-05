@@ -21,9 +21,9 @@ describe('Cart Tests', () =>{
             .severity('normal')
             .tag('cart');
         homePage.getCartButton.verifyTextButton(0);
-        homePage.getCartTotal.verifyValueOfTitle(homePage.itemsName.defaultValueOfCartTotal);
+        homePage.getCartTotal.verifyValueOfText(homePage.itemsName.defaultValueOfCartTotal);
         homePage.getCartButton.clickButton();
-        cartPage.getMessageOfCart.verifyDefaultMessage(cartPage.items.defaultMessageCart);
+        cartPage.verifyDefaultMessageForCart(cartPage.items.defaultMessageCart);
     });
 
     it('Closing the cart Test', { tags: ['@medium', '@cart']}, () =>{
@@ -46,7 +46,7 @@ describe('Cart Tests', () =>{
 
         homePage.getCartButton.verifyTextButton(1);
         homePage.getCartButton.clickButton();
-        cartPage.getProductTitle.verifyValueOfTitle(productNameForCart[0]);
+        cartPage.getProductTitle.verifyValueOfText(productNameForCart[0]);
         cartPage.compareProductPriceWithPriceOnCart(productNameForCart[0], 1);
     });
 
@@ -103,17 +103,17 @@ describe('Cart Tests', () =>{
         cy.allure()
             .severity('normal')
             .tag('cart');
-        homePage.getSearchBar.typeText(productNameForCart[4]);
+        homePage.getSearchBar.typeText(productNameForCart[3]);
         homePage.getSearchButton.clickButton();
-        searchPage.clickBuyButtonOfProductByName(productNameForCart[4]);
+        searchPage.clickBuyButtonOfProductByName(productNameForCart[3]);
 
         homePage.getCartButton.clickButton();
-        cartPage.getProductTitle.verifyValueOfTitle(productNameForCart[4]);
+        cartPage.getProductTitle.verifyValueOfText(productNameForCart[3]);
         cartPage.getQuantityOfItems.verifyValueOfField(1);
         cartPage.getQuantityOfItems.setValueToInputField(5);
         cartPage.getQuantityOfItems.clickEnter();
         cartPage.getQuantityOfItems.verifyValueOfField(5);
-        cartPage.compareProductPriceWithPriceOnCart(productNameForCart[4]);
+        cartPage.compareProductPriceWithPriceOnCart(productNameForCart[3]);
     });
 
     it('Removing items from the cart Test', { tags: ['@medium', '@cart']}, () =>{
@@ -128,7 +128,7 @@ describe('Cart Tests', () =>{
         cartPage.getDeleteButton.clickButton();
         cartPage.getCloseButton.clickButton();
         homePage.getCartButton.clickButton();
-        cartPage.getMessageOfCart.verifyDefaultMessage(cartPage.items.defaultMessageCart);
+        cartPage.verifyDefaultMessageForCart(cartPage.items.defaultMessageCart);
     });
 
     it('Opening the ordering page from the cart Test', { tags: ['@critical', '@cart']}, () =>{

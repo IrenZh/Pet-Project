@@ -27,7 +27,7 @@ describe('Login Test', () =>{
         homePage.getAuthButton.clickButton();
         loginPage.login(Cypress.env('EMAIL'), Cypress.env('PASSWORD'));
         
-        homePage.getMainLogo.verifyTitleIsVisible();
+        homePage.getMainLogo.verifyTextIsVisible();
         homePage.getUserIconButton.clickButton();
         homePage.getUserCabinet.verifyTextButton(homePage.itemsName.userCabinet);
     });

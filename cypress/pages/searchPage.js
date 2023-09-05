@@ -1,7 +1,7 @@
 import AlertElement from '../elements/alertElement';
 import ButtonElement from '../elements/buttonElement';
 import InputElement from '../elements/inputElement';
-import TitleElement from '../elements/titleElement';
+import TextElement from '../elements/textElement';
 
 class search {
     constructor() {
@@ -11,8 +11,8 @@ class search {
 
         this.getSearchInput = new InputElement('input[name="search"]');
 
-        this.getSearchTitle = new TitleElement('h1.SearchFilter-title');
-        this.getSearchResultTitle = new TitleElement('.ProductListItem-title');
+        this.getSearchTitle = new TextElement('h1.SearchFilter-title');
+        this.getSearchResultTitle = new TextElement('.ProductListItem-title');
 
         this.getSuccessMessage = new AlertElement('.Alert_success');
     }
@@ -63,6 +63,17 @@ class search {
         this.elements.getSearchResultTitle().contains(productName).invoke('text').as('productTitle');
         cy.get('@productTitle').then(productTitle => {
             this.getSuccessMessage.verifyAlertMessage(`${productTitle} додано у кошик!`);
+        });
+    }
+
+    /**
+     * Verifies that the title of search results contain the search query.
+     * @param {string} searchQuery - The search query to be checked in texts.
+     */
+
+    verifyTitlesOfSearchResults(searchQuery){
+        this.elements.getSearchResultTitle().each((result) => {          
+            expect(result.text().toLowerCase()).to.include(searchQuery); 
         });
     }
 }

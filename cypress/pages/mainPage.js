@@ -2,7 +2,7 @@ import AlertElement from '../elements/alertElement';
 import ButtonElement from '../elements/buttonElement';
 import dropDownElement from '../elements/dropDownElement';
 import InputElement from '../elements/inputElement';
-import TitleElement from '../elements/titleElement';
+import TextElement from '../elements/textElement';
 
 class home {
     constructor() {
@@ -20,11 +20,15 @@ class home {
         
         this.getAlertLogIn = new AlertElement('.Alert');
 
-        this.getSearchResulTitleOnDropDown = new TitleElement('.SearchResultProduct-name');    
-        this.getCartTotal = new TitleElement('.HeaderCartLink-price');
-        this.getMainLogo = new TitleElement('.HeaderMain-logo');
+        this.getSearchResulTitleOnDropDown = new TextElement('.SearchResultProduct-name');    
+        this.getCartTotal = new TextElement('.HeaderCartLink-price');
+        this.getMainLogo = new TextElement('.HeaderMain-logo');
 
     }
+
+    elements = {
+        getSearchResulTitleOnDropDown: () => cy.get('.SearchResultProduct-name'),
+    };
 
     itemsName = {
         userCabinet: 'Особистий кабінет',
@@ -32,6 +36,18 @@ class home {
         placeholder: 'Найти..',
         defaultValueOfCartTotal: '0 грн.'
     };
+
+    /**
+     * Verifies search results in the dropdown contain the provided search query.
+     * @param {*} searchQuery - The search query to be included in the search results.
+     */
+
+    verifySearchResultsInDropDown(searchQuery){
+        this.getSearchBar.typeText(searchQuery); 
+        this.elements.getSearchResulTitleOnDropDown().each((result) => {      
+            expect(result.text().toLowerCase()).to.include(searchQuery);           
+        });
+    }
 }
 
 export const homePage = new home();

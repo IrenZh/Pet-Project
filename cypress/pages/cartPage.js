@@ -1,59 +1,33 @@
+import ButtonElement from '../elements/buttonElement';
+import dropDownElement from '../elements/dropDownElement';
+import InputElement from '../elements/inputElement';
+import TextElement from '../elements/textElement';
 import { searchPage } from './searchPage';
 
 class cart {
+    constructor() {
+        this.getCloseButton = new ButtonElement('.fa-close');
+        this.getDecreaseButton = new ButtonElement('.ProductTable-quantity .product-counter__btn--decrease');
+        this.getIncreaseButton = new ButtonElement('.ProductTable-quantity .product-counter__btn--increase');
+        this.getDeleteButton = new ButtonElement('.fa-remove');
+        this.getOrderButton = new ButtonElement('.HeaderCart-btn');
+
+        this.getCart = new dropDownElement('#dropdown-cart');
+
+        this.getProductTitle = new TextElement('.ProductTable-productTitle');
+        this.getProductPrice = new TextElement('.ProductTable-price');
+
+        this.getQuantityOfItems = new InputElement('.ProductTable-quantity div[data-value]');       
+    }
     elements = {
+        getQuantityOfItems: () => cy.get('.ProductTable-quantity div[data-value]'),
         getCart: () => cy.get('#dropdown-cart'),
         getMessageOfCart: () => cy.get('.HeaderCart-content_empty'),
-        getCloseButton: () => cy.get('.fa-close'),
-        getProductTitle: () => cy.get('.ProductTable-productTitle'),
-        getProductPrice: () => cy.get('.ProductTable-price'),
-        getQuantityOfItems: () => cy.get('.ProductTable-quantity').find('[data-value]'),
-        getDecreaseButton: () => cy.get('.ProductTable-quantity .product-counter__btn--decrease'),
-        getIncreaseButton: () => cy.get('.ProductTable-quantity .product-counter__btn--increase'),
-        getInputOfQuantity: () => cy.get('.ProductTable-quantity .product-counter__val'),
-        getDeleteButton: () => cy.get('.fa-remove'),
-        getOrderButton: () => cy.get('.HeaderCart-btn'),
     };
-
+    
     items = {
         defaultMessageCart: 'кошик порожній!'
     };
-
-    /**
-     * Verifies if the default message in the dropdown cart matches the provided default message.
-     * @param {string} defaultMessageCart - 'Ваш кошик порожній!'.
-     */
-    verifyDefaultMessageForCart(defaultMessageCart) {
-        this.elements.getCart().should('be.visible');
-        this.elements.getMessageOfCart().invoke('text').then((messageText) => {
-            cy.wrap(messageText.trim().toLowerCase()).should('contain', defaultMessageCart);
-        });
-    }
-
-    /**
-     *  Closes the cart by clicking the close button.
-     */
-
-    closeCart(){
-        this.elements.getCloseButton().click();
-    }
-
-    /**
-     * Verifies that the cart dropdown is not visible.
-     */
-
-    verifyCartIsNotVisible(){
-        this.elements.getCart().should('not.be.visible');
-    }
-
-    /**
-     * Verifies that the title of the product in the cart matches the expected product name.
-     * @param {*} productName 
-     */
-
-    verifyTitleOfProductOnCart(productName) {
-        this.elements.getProductTitle().should('contain', productName);
-    }
 
     /**
      * Calculates the total price of a product in the cart based on its price and quantity.
@@ -77,7 +51,7 @@ class cart {
     compareProductPriceWithPriceOnCart(productName) {
         this.getQuantityOfProducts().then(quantity => {
             this.getPriceOnCart(productName, quantity).then(expectedProductPrice => {
-                this.elements.getProductPrice().should('include.text', expectedProductPrice);
+                this.getProductPrice.verifyValueOfText(expectedProductPrice);
             });
         });
     }
@@ -92,37 +66,14 @@ class cart {
     }
 
     /**
-     * Verifies if the quantity of products matches the expected number.
-     * @param {number} numberOfProducts The expected number of products.
+     * Verifies if the default message in the dropdown cart matches the provided default message.
+     * @param {string} defaultMessageCart - 'Ваш кошик порожній!'.
      */
-
-    verifyQuantityOfProducts(numberOfProducts){ 
-        this.elements.getQuantityOfItems().should('have.attr', 'data-value', numberOfProducts);
-    }
-
-    /**
-     * Sets a specific quantity value in the quantity input field.
-     * @param {number} number The quantity value to set.
-     */
-
-    setValueToQuantityInput(number){ 
-        this.elements.getInputOfQuantity().type(number).type('{enter}');
-    }
-
-    /**
-     * Clicks the delete button for a product from the cart
-     */
-
-    clickDeleteButton(){ 
-        this.elements.getDeleteButton().click();
-    }
-
-    /**
-     * Clicks the order button to initiate the order process.
-     */
-
-    clickOrderButton(){ 
-        this.elements.getOrderButton().click();
+    verifyDefaultMessageForCart(defaultMessageCart) {
+        this.elements.getCart().should('be.visible');
+        this.elements.getMessageOfCart().invoke('text').then((messageText) => {
+            cy.wrap(messageText.trim().toLowerCase()).should('contain', defaultMessageCart);
+        });
     }
 
 }

@@ -19,7 +19,8 @@ describe('Search Test', () =>{
 
     it('Checking the default values in the search bar Test', { tags: ['@low', '@search']}, () =>{    
         cy.allure().severity('minor');
-        homePage.verifyDefaultValuePlaceholder(homePage.itemsName.placeholder);
+        homePage.getSearchBar.clickOnField();
+        homePage.getSearchBar.verifyValueOfField(homePage.itemsName.placeholder);
     });
 
     it('Searching with name of item clicking the search button Test', { tags: ['@high', '@search']}, () =>{
@@ -27,11 +28,14 @@ describe('Search Test', () =>{
             .severity('normal')
             .tag('search');
         productName.forEach(productName => {
+            homePage.getSearchBar.typeText(productName);
+            homePage.getSearchDropDown.verifyDropDownIsVisible();
             homePage.verifySearchResultsInDropDown(productName);
-            homePage.clickOnSerchButton();
-            searchPage.verifyValueOfSearchInput(productName);
-            searchPage.verifyValueOfSearchTitle(productName);
-            searchPage.verifySearchResults(productName);
+            homePage.getSearchButton.clickButton();
+
+            searchPage.getSearchInput.verifyValueOfField(productName);
+            searchPage.getSearchTitle.verifyValueOfText(productName);
+            searchPage.verifyTitlesOfSearchResults(productName);
         });
     });
 
@@ -39,54 +43,70 @@ describe('Search Test', () =>{
         cy.allure()
             .severity('normal')
             .tag('search');
-        homePage.verifySearchResultsInDropDown(productName[0]);
-        homePage.clickEnterForSearching();
-        searchPage.verifyValueOfSearchInput(productName[0]);
-        searchPage.verifyValueOfSearchTitle(productName[0]);
-        searchPage.verifySearchResults(productName[0]);
+        homePage.getSearchBar.typeText(productName[0]);
+        homePage.getSearchDropDown.verifyDropDownIsVisible();
+        homePage.verifySearchResultsInDropDown(productName[0]);           
+        homePage.getSearchBar.clickEnter();
+
+        searchPage.getSearchInput.verifyValueOfField(productName[0]);
+        searchPage.getSearchTitle.verifyValueOfText(productName[0]);
+        searchPage.verifyTitlesOfSearchResults(productName[0]);
     });
 
     it('Verify pagination Test', { tags: ['@high', '@search']}, () =>{
         cy.allure()
             .severity('normal')
             .tag('search');
-        homePage.verifySearchResultsInDropDown(productNameForPagination);
-        homePage.clickEnterForSearching();
-        searchPage.verifyValueOfSearchInput(productNameForPagination);
-        searchPage.verifyValueOfSearchTitle(productNameForPagination);
-        searchPage.verifySearchResults(productNameForPagination);
-        searchPage.clickToSecondPage();
-        searchPage.verifySearchResults(productNameForPagination);
+        homePage.getSearchBar.typeText(productNameForPagination);
+        homePage.getSearchDropDown.verifyDropDownIsVisible();
+        homePage.verifySearchResultsInDropDown(productNameForPagination);   
+        homePage.getSearchBar.clickEnter();
+
+        searchPage.getSearchInput.verifyValueOfField(productNameForPagination);
+        searchPage.getSearchTitle.verifyValueOfText(productNameForPagination);
+        searchPage.verifyTitlesOfSearchResults(productNameForPagination);
+
+        searchPage.getPaginationSecondPage.clickButton();
+        searchPage.verifyTitlesOfSearchResults(productNameForPagination);
     });
 
     it('Searching for an item, then changing the search word Test', { tags: ['@medium', '@search']}, () =>{
         cy.allure()
             .severity('normal')
             .tag('search');
+        homePage.getSearchBar.typeText(productName[3]);
+        homePage.getSearchDropDown.verifyDropDownIsVisible();
         homePage.verifySearchResultsInDropDown(productName[3]);
-        homePage.clickEnterForSearching();
-        searchPage.verifyValueOfSearchInput(productName[3]);
-        searchPage.verifyValueOfSearchTitle(productName[3]);
-        searchPage.verifySearchResults(productName[3]);
-        searchPage.searchItem(productName[4]);
-        searchPage.verifyValueOfSearchInput(productName[4]);
-        searchPage.verifyValueOfSearchTitle(productName[4]);
-        searchPage.verifySearchResults(productName[4]);
+        homePage.getSearchBar.clickEnter();
+
+        searchPage.getSearchInput.verifyValueOfField(productName[3]);
+        searchPage.getSearchTitle.verifyValueOfText(productName[3]);
+        searchPage.verifyTitlesOfSearchResults(productName[3]);
+
+        searchPage.getSearchInput.typeText(productName[4]);
+        searchPage.getSearchButton.clickButton();
+        searchPage.getSearchInput.verifyValueOfField(productName[4]);
+        searchPage.getSearchTitle.verifyValueOfText(productName[4]);
+        searchPage.verifyTitlesOfSearchResults(productName[4]);
     });
 
     it('Searching with empty field Test', { tags: ['@medium', '@search']}, () =>{
         cy.allure()
             .severity('normal')
             .tag('search');
+        homePage.getSearchBar.typeText(productName[1]);
+        homePage.getSearchDropDown.verifyDropDownIsVisible();
         homePage.verifySearchResultsInDropDown(productName[1]);
-        homePage.clickEnterForSearching();
-        searchPage.verifyValueOfSearchInput(productName[1]);
-        searchPage.verifyValueOfSearchTitle(productName[1]);
-        searchPage.verifySearchResults(productName[1]);
-        searchPage.clearSearchInput();
-        searchPage.verifyDefaultValueOfSearchInput();
-        searchPage.clickEnterForSearching();
-        searchPage.verifySearchResultsIsNotExist();
+        homePage.getSearchBar.clickEnter();
+
+        searchPage.getSearchInput.verifyValueOfField(productName[1]);
+        searchPage.getSearchTitle.verifyValueOfText('Пошук - ' + productName[1]);
+        searchPage.verifyTitlesOfSearchResults(productName[1]);
+
+        searchPage.getSearchInput.clearInputField();
+        searchPage.getSearchInput.verifyValueOfField(searchPage.itemsName.placeholder);
+        searchPage.getSearchInput.clickEnter();
+        searchPage.getSearchResultTitle.verifyTextIsNotExist();
         searchPage.verifyMessage();
     });
 });

@@ -23,31 +23,31 @@ describe('Login Test', () =>{
         cy.allure()
             .severity('critical')
             .tag('login');
-        homePage.elements.getUserIconButton().click();
-        homePage.elements.getAuthButton().click();
+        homePage.getUserIconButton.clickButton();
+        homePage.getAuthButton.clickButton();
         loginPage.login(Cypress.env('EMAIL'), Cypress.env('PASSWORD'));
         
-        homePage.elements.getMainLogo().should('be.visible');
-        homePage.elements.getUserIconButton().click();
-        homePage.elements.getUserCabinet().should('contain', homePage.itemsName.userCabinet);
+        homePage.getMainLogo.verifyTextIsVisible();
+        homePage.getUserIconButton.clickButton();
+        homePage.getUserCabinet.verifyTextButton(homePage.itemsName.userCabinet);
     });
 
     it('Log Out Test', { tags: ['@critical', '@login']}, () =>{
         cy.allure()
             .severity('critical')
             .tag('login');
-        homePage.elements.getUserIconButton().click();
-        homePage.elements.getAuthButton().click();
+        homePage.getUserIconButton.clickButton();
+        homePage.getAuthButton.clickButton();
         loginPage.login(Cypress.env('EMAIL'), Cypress.env('PASSWORD'));
     
-        homePage.elements.getUserIconButton().click();
-        homePage.elements.getUserCabinet().should('contain', homePage.itemsName.userCabinet);
+        homePage.getUserIconButton.clickButton();
+        homePage.getUserIconButton.verifyTextButton(homePage.itemsName.userCabinet);
 
-        homePage.elements.getUserIconButton().click();
-        homePage.elements.getLogOut().click();
+        homePage.getUserIconButton.clickButton();
+        homePage.getLogOut.clickButton();
     
-        homePage.elements.getUserIconButton().click();
-        homePage.elements.getAuthButton().should('contain', homePage.itemsName.authorization);
+        homePage.getUserIconButton.clickButton();
+        homePage.getAuthButton.verifyTextButton(homePage.itemsName.authorization);
     });
 
     it('Login with not registered email Test', { tags: ['@high', '@login']}, () =>{  
@@ -55,13 +55,13 @@ describe('Login Test', () =>{
             .severity('normal')
             .tag('login');
         notRegisteredEmail.forEach(notRegisteredEmail => {
-            homePage.elements.getUserIconButton().click();
-            homePage.elements.getAuthButton().click();
+            homePage.getUserIconButton.clickButton();
+            homePage.getAuthButton.clickButton();
             loginPage.login(notRegisteredEmail,Cypress.env('PASSWORD'));
 
-            homePage.elements.getAlertLogIn().should('contain', loginPage.errorName.logInError);
-            homePage.elements.getUserIconButton().click();
-            homePage.elements.getAuthButton().should('contain', homePage.itemsName.authorization);
+            homePage.getAlertLogIn.verifyAlertMessage(loginPage.errorName.logInError);
+            homePage.getUserIconButton.clickButton();
+            homePage.getAuthButton.verifyTextButton(homePage.itemsName.authorization);
             
         });
     }); 
@@ -71,14 +71,15 @@ describe('Login Test', () =>{
             .severity('normal')
             .tag('login');
         invalidEmail.forEach(invalidEmail => { 
-            homePage.elements.getUserIconButton().click();
-            homePage.elements.getAuthButton().click();
-            loginPage.fillLoginInfo(invalidEmail,Cypress.env('PASSWORD'));
-            loginPage.elements.getLoginButton().click();
+            homePage.getUserIconButton.clickButton();
+            homePage.getAuthButton.clickButton();
+            loginPage.getLoginInput.typeText(invalidEmail);
+            loginPage.getPasswordInput.typeText(Cypress.env('PASSWORD'));
+            loginPage.getLoginButton.clickButton();
 
-            loginPage.elements.getErrorEmailField().should('contain', loginPage.errorName.emailError);
-            homePage.elements.getUserIconButton().click();
-            homePage.elements.getAuthButton().should('contain', homePage.itemsName.authorization);
+            loginPage.getErrorEmailField.verifyAlertMessage(loginPage.errorName.emailError);
+            homePage.getUserIconButton.clickButton();
+            homePage.getAuthButton.verifyTextButton(homePage.itemsName.authorization);
 
         });
     });
@@ -88,13 +89,15 @@ describe('Login Test', () =>{
             .severity('normal')
             .tag('login');
         invalidPassword.forEach(invalidPassword => { 
-            homePage.elements.getUserIconButton().click();
-            homePage.elements.getAuthButton().click();
-            loginPage.login(Cypress.env('EMAIL'),invalidPassword);
+            homePage.getUserIconButton.clickButton();
+            homePage.getAuthButton.clickButton();
+            loginPage.getLoginInput.typeText(Cypress.env('EMAIL'));
+            loginPage.getPasswordInput.typeText(invalidPassword);
+            loginPage.getLoginButton.clickButton();
    
-            homePage.elements.getAlertLogIn().should('contain', loginPage.errorName.logInError);
-            homePage.elements.getUserIconButton().click();
-            homePage.elements.getAuthButton().should('contain', homePage.itemsName.authorization);
+            homePage.getAlertLogIn.verifyAlertMessage(loginPage.errorName.logInError);
+            homePage.getUserIconButton.clickButton();
+            homePage.getAuthButton.verifyTextButton(homePage.itemsName.authorization);
         });
     });
 
@@ -104,7 +107,7 @@ describe('Login Test', () =>{
             .tag('login');
         cy.loginViaApi(Cypress.env('EMAIL'), Cypress.env('PASSWORD'));
         
-        homePage.elements.getUserIconButton().click();
-        homePage.elements.getUserCabinet().should('contain', homePage.itemsName.userCabinet);
+        homePage.getUserIconButton.clickButton();
+        homePage.getUserCabinet.verifyTextButton(homePage.itemsName.userCabinet);
     });
 });
